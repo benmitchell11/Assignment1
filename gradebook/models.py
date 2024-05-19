@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Semester(models.Model):
-    number = models.IntegerField()
+    semester = models.IntegerField()
     year = models.IntegerField()
 
 
@@ -12,17 +12,18 @@ class Course(models.Model):
     code = models.CharField(max_length=50)
 
 
-class Class(models.Model):
-    number = models.IntegerField()
-    semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    lecturer = models.ForeignKey(User, on_delete=models.CASCADE)
-
-
 class Lecturer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     dob = models.DateField()
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+
+
+class Class(models.Model):
+    number = models.IntegerField()
+    semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    lecturer = models.ForeignKey(Lecturer, on_delete=models.CASCADE)
 
 
 class Student(models.Model):
@@ -36,6 +37,3 @@ class StudentEnrolment(models.Model):
     enrol_time = models.DateTimeField(auto_now_add=True)
     grade_time = models.DateTimeField(auto_now=True)
     classID = models.ForeignKey(Class, on_delete=models.CASCADE)
-
-
-

@@ -5,11 +5,12 @@
     <title>Create Course</title>
 </head>
 <body>
-    <h1>Create Semester</h1>
+    <h1>Create Course</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Create Course</button>
+        <button onclick="window.history.back()">Back</button>
     </form>
 </body>
 </html>

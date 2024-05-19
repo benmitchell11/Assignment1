@@ -1,11 +1,9 @@
-{% block title %}Edit Semester{% endblock %}
-
 {% block content %}
-    <h1>Edit Student</h1>
-
+    <h1>Edit Lecturer</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button class="btn btn-secondary">Update</button>
+        <button type="submit">Update</button>
+        <button onclick="window.history.back()">Back</button>
     </form>
 {% endblock %}

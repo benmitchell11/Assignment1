@@ -3,13 +3,15 @@
 {% block content %}
     <ul>
     <h1>Semesters</h1>
+        <button><a href="{% url 'create_semester' %}">Create Semester</a></button>
         {% for semester in object_list %}
             <li>
-                - {{ semester.name }}
-                - {{ semester.year }}
+                Semester {{ semester.number }}
+                {{ semester.year }}
                 <a href="{% url 'update_semester' semester.id %}">Edit</a>
                 <a href="{% url 'delete_semester' semester.id %}">Delete</a>
             </li>
         {% endfor %}
     </ul>
+    <button><a href="{% url 'admin_dashboard' %}">Back</a></button>
 {% endblock %}

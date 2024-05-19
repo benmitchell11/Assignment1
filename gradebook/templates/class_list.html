@@ -1,15 +1,15 @@
-{% block title %}Post Page{% endblock %}
-
 {% block content %}
     <ul>
     <h1>Classes</h1>
         {% for class in object_list %}
             <li>
-                - {{ class.number }}
-                - {{ class.semester }}
+                {{ class.course.code }}{{ class.number }}
+                - Semester {{ class.semester.number }}
+                - {{ class.lecturer.user.first_name }} {{ class.lecturer.user.last_name }}
                 <a href="{% url 'update_class' class.id %}">Edit</a>
                 <a href="{% url 'delete_class' class.id %}">Delete</a>
             </li>
         {% endfor %}
     </ul>
+    <button><a href="{% url 'admin_dashboard' %}">Back</a></button>
 {% endblock %}

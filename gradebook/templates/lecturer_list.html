@@ -1,15 +1,17 @@
-{% block title %}Post Page{% endblock %}
+
 
 {% block content %}
     <ul>
     <h1>Lecturers</h1>
+        <button><a href="{% url 'create_lecturer' %}">Create Lecturer</a></button>
         {% for lecturer in object_list %}
             <li>
-                - {{ lecturer.user.first_name }}
-                - {{ lecturer.user.last_name }}
+                {{ lecturer.user.first_name }}
+                {{ lecturer.user.last_name }}
                 <a href="{% url 'update_lecturer' lecturer.id %}">Edit</a>
                 <a href="{% url 'delete_lecturer' lecturer.id %}">Delete</a>
             </li>
         {% endfor %}
     </ul>
+    <button><a href="{% url 'admin_dashboard' %}">Back</a></button>
 {% endblock %}
