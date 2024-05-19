@@ -1,0 +1,9 @@
+{% block content %}
+    <h2>Confirm Delete Semester</h2>
+    <p>Are you sure you want to delete the class "{{ course.name }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="confirm_delete">Confirm Delete</button>
+        <a href="{% url 'semester_list' %}">Cancel</a>
+    </form>
+{% endblock %}

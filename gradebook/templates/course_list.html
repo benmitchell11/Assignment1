@@ -1,0 +1,15 @@
+{% block title %}Post Page{% endblock %}
+
+{% block content %}
+    <ul>
+    <h1>Courses</h1>
+        {% for course in object_list %}
+            <li>
+                - {{ course.name }}
+                - {{ course.code }}
+                <a href="{% url 'update_course' course.id %}">Edit</a>
+                <a href="{% url 'delete_course' course.id %}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
