@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Detail</title>
+</head>
+<body>
+    <h1>Course Detail</h1>
+    <div>
+        <h2>{{ course.code }}: {{ course.name }}</h2>
+        <h3>Classes:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Number</th>
+                    <th>Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for class in classes %}
+                    <tr>
+                        <td>{{ class.course.code }}</td>
+                        <td>{{ class.number }}</td>
+                        <td>{{ class.name }}</td>
+                        <td><a href="{% url 'class_detail' class.id %}">View Class</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Lecturers:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lecturer in lecturers %}
+                    <tr>
+                        <td>{{ lecturer.user.first_name }} {{ lecturer.user.last_name }}</td>
+                        <td><a href="{% url 'lecturer_detail' lecturer.id %}">View Lecturer</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if request.user.is_superuser %}
+        <a href="{% url 'update_course' course.id %}">Edit</a> <br>
+        <a href="{% url 'delete_course' course.id %}">Delete</a>
+    {% endif %}
+    {% if request.user.is_superuser %}
+        <button><a href="{% url 'admin_dashboard' %}">Back</a></button>
+    {% endif %}
+    {% if request.user.is_authenticated and request.user.lecturer %}
+        <button><a href="{% url 'lecturer_dashboard' %}">Back</a></button>
+    {% endif %}
+    {% if request.user.is_authenticated and request.user.student %}
+        <button><a href="{% url 'student_dashboard' %}">Back</a></button>
+    {% endif %}
+</body>
+</html>

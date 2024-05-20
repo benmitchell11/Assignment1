@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import ClassDetailView, AssignLecturerView, StudentEnrolmentView, AssignedClassesView
 
 urlpatterns = [
     path('', views.HomeView.as_view(), name='home'),
@@ -28,4 +29,18 @@ urlpatterns = [
     path('logout/', views.signout, name='logout'),
     path('lecturer_login/', views.LecturerLoginView.as_view(), name='lecturer_login'),
     path('student_login/', views.StudentLoginView.as_view(), name='student_login'),
+    path('class/<int:pk>/', ClassDetailView.as_view(), name='class_detail'),
+    path('class/<int:pk>/assign_lecturer/', AssignLecturerView.as_view(), name='assign_lecturer'),
+    path('class/<int:pk>/enrol_student/', StudentEnrolmentView.as_view(), name='student_enrol'),
+    path('student/<int:pk>/', views.StudentDetailView.as_view(), name='student_detail'),
+    path('lecturer/<int:pk>/', views.LecturerDetailView.as_view(), name='lecturer_detail'),
+    path('semester/<int:pk>/', views.SemesterDetailView.as_view(), name='semester_detail'),
+    path('course/<int:pk>/', views.CourseDetailView.as_view(), name='course_detail'),
+    path('assign_grade/<int:pk>/', views.AssignGradeView.as_view(), name='assign_grade'),
+    path('student_dashboard/', views.StudentDashboardView.as_view(), name='student_dashboard'),
+    path('lecturer_dashboard/', views.LecturerDashboardView.as_view(), name='lecturer_dashboard'),
+    path('read_excel/', views.read_excel, name='read_excel'),
+    path('student/<int:pk>/view_grades/', views.CheckGradesView.as_view(), name='check_grades'),
+    path('student/<int:pk>/view_enrolled_classes/', views.EnrolledClassesView.as_view(), name='view_enrolled_classes'),
+    path('lecturer/<int:pk>/view_assigned_classes/', views.AssignedClassesView.as_view(), name='assigned_classes'),
 ]

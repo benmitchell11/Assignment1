@@ -1,17 +1,23 @@
-
-
 {% block content %}
-    <ul>
     <h1>Lecturers</h1>
-        <button><a href="{% url 'create_lecturer' %}">Create Lecturer</a></button>
-        {% for lecturer in object_list %}
-            <li>
-                {{ lecturer.user.first_name }}
-                {{ lecturer.user.last_name }}
-                <a href="{% url 'update_lecturer' lecturer.id %}">Edit</a>
-                <a href="{% url 'delete_lecturer' lecturer.id %}">Delete</a>
-            </li>
-        {% endfor %}
-    </ul>
+    <button><a href="{% url 'create_lecturer' %}">Create Lecturer</a></button>
+     <table>
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lecturer in object_list %}
+                <tr>
+                    <td>{{ lecturer.user.first_name }}</td>
+                    <td>{{ lecturer.user.last_name }}</td>
+                    <td><a href="{% url 'lecturer_detail' lecturer.id %}">View Lecturer</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     <button><a href="{% url 'admin_dashboard' %}">Back</a></button>
 {% endblock %}

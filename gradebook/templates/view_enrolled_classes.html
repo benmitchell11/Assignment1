@@ -1,0 +1,24 @@
+{% block content %}
+    <h2>Enrolled Classes</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Number</th>
+                <th>Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for class in enrolled_classes %}
+                <tr>
+                    <td>{{ class.classID.course.code }}</td>
+                    <td>{{ class.classID.number }}</td>
+                    <td>{{ class.classID.name }}</td>
+                    <td><a href="{% url 'class_detail' class.classID.id %}">View Class</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button><a href="{% url 'student_dashboard' %}">Back</a></button>
+{% endblock %}

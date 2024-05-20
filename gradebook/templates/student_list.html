@@ -1,16 +1,23 @@
-{% block title %}Post Page{% endblock %}
-
 {% block content %}
-    <ul>
     <h1>Students</h1>
-        {% for student in object_list %}
-            <li>
-                - {{ student.user.first_name }}
-                - {{ student.user.last_name }}
-                <a href="{% url 'update_student' student.id %}">Edit</a>
-                <a href="{% url 'delete_student' student.id %}">Delete</a>
-            </li>
-        {% endfor %}
-    </ul>
+    <button><a href="{% url 'create_student' %}">Create Student</a></button>
+    <table>
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in object_list %}
+                <tr>
+                    <td>{{ student.user.first_name }}</td>
+                    <td>{{ student.user.last_name }}</td>
+                    <td><a href="{% url 'student_detail' student.id %}">View Student</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     <button><a href="{% url 'admin_dashboard' %}">Back</a></button>
 {% endblock %}

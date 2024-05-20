@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Detail</title>
+</head>
+<body>
+    <h1>Student Detail</h1>
+    <div>
+        <h2>{{ student.user.first_name }} {{ student.user.last_name }}</h2>
+        <p>DOB: {{ student.dob }}</p>
+        <p>Email address: {{ student.user.email }}</p>
+        <h3>Classes:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Number</th>
+                    <th>Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for enrolment in enrolments %}
+                    <tr>
+                        <td>{{ enrolment.classID.course.code }}</td>
+                        <td>{{ enrolment.classID.number }}</td>
+                        <td>{{ enrolment.classID.name }}</td>
+                        <td><a href="{% url 'class_detail' enrolment.classID.id %}">View Class</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if request.user.is_superuser %}
+            <a href={% url 'update_student' student.id %}>Edit</a> <br>
+            <a href={% url 'delete_student' student.id %}>Delete</a>
+        {% endif %}
+    </div>
+    {% if request.user.is_superuser %}
+        <button><a href="{% url 'admin_dashboard' %}">Back</a></button>
+    {% endif %}
+    {% if request.user.is_authenticated and request.user.lecturer %}
+        <button><a href="{% url 'lecturer_dashboard' %}">Back</a></button>
+    {% endif %}
+    {% if request.user.is_authenticated and request.user.student %}
+        <button><a href="{% url 'student_dashboard' %}">Back</a></button>
+    {% endif %}
+</body>
+</html>

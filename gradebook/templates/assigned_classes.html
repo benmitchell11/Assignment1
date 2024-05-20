@@ -1,17 +1,16 @@
 {% block content %}
-    <h1>Classes</h1>
-    <button><a href="{% url 'create_class' %}">Create Class</a></button>
+    <h1>Assigned Classes</h1>
     <table>
         <thead>
-             <tr>
-                <th>Code</th>
+            <tr>
+                <th>Course</th>
                 <th>Number</th>
                 <th>Name</th>
                 <th></th>
-             </tr>
+            </tr>
         </thead>
         <tbody>
-            {% for class in object_list %}
+            {% for class in assigned_classes %}
                 <tr>
                     <td>{{ class.course.code }}</td>
                     <td>{{ class.number }}</td>
@@ -21,5 +20,5 @@
             {% endfor %}
         </tbody>
     </table>
-    <button><a href="{% url 'admin_dashboard' %}">Back</a></button>
+    <button><a href="{% url 'lecturer_dashboard' %}">Back</a></button>
 {% endblock %}

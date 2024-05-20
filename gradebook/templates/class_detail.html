@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Detail</title>
+</head>
+<body>
+    <h1>Class Detail</h1>
+    <div>
+        <h2>{{ class.name }}</h2>
+        <p>{{ class.course.code }} {{ class.number }}</p>
+        {% if class.lecturer %}
+            <p>Lecturer: {{ class.lecturer.user.first_name }} {{ class.lecturer.user.last_name }} <a href="{% url 'lecturer_detail' class.lecturer.id %}">View Lecturer</a></p>
+        {% else %}
+            <p>Lecturer: Unassigned</p>
+        {% endif %}
+        <p>Semester: {{ class.semester.semester }} {{ class.semester.year }}</p>
+        <h3>Students Enrolled:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for enrolment in class.studentenrolment_set.all %}
+                    <tr>
+                        <td>{{ enrolment.student.user.first_name }}</td>
+                        <td>{{ enrolment.student.user.last_name }}</td>
+                        {% if request.user.is_authenticated and request.user.lecturer %}
+                            <td><a href={% url 'assign_grade' pk=enrolment.student.id %}>Assign Grade</a></td>
+                        {% endif %}
+                        <td><a href={% url 'student_detail' pk=enrolment.student.id %}>View Student</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if request.user.is_authenticated and request.user.lecturer %}
+            <a href={% url 'student_enrol' pk=class.id %}>Enrol Student</a> <br>
+        {% endif %}
+        {% if request.user.is_superuser %}
+            <a href={% url 'assign_lecturer' pk=class.id %}>Assign Lecturer</a> <br>
+            <a href={% url 'update_class' class.id %}>Edit</a> <br>
+            <a href={% url 'delete_class' class.id %}>Delete</a>
+        {% endif %}
+        {% if request.user.is_superuser %}
+        <button><a href="{% url 'admin_dashboard' %}">Back</a></button>
+    {% endif %}
+    {% if request.user.is_authenticated and request.user.lecturer %}
+        <button><a href="{% url 'lecturer_dashboard' %}">Back</a></button>
+    {% endif %}
+    {% if request.user.is_authenticated and request.user.student %}
+        <button><a href="{% url 'student_dashboard' %}">Back</a></button>
+    {% endif %}
+    </div>
+</body>
+</html>

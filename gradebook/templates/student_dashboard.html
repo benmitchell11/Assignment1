@@ -1,0 +1,6 @@
+{% block content %}
+    <h1>Welcome {{ student.user.first_name }} {{ student.user.last_name }}</h1>
+    <a href="{% url 'view_enrolled_classes' student.id %}">View Enrolled Classes</a>
+    <a href="{% url 'check_grades' student.id %}">View Grades</a>
+    <a href="{% url 'logout' %}">Logout</a>
+{% endblock %}

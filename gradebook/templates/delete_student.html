@@ -1,9 +1,17 @@
 {% block content %}
     <h2>Confirm Delete Semester</h2>
-    <p>Are you sure you want to delete the semester "{{ student.name }}"?</p>
+    <p>Are you sure you want to delete the student"{{ student.user.first_name }} {{ student.user.last_name }}"?</p>
     <form method="post">
         {% csrf_token %}
         <button type="submit" name="confirm_delete">Confirm Delete</button>
         <a href="{% url 'student_list' %}">Cancel</a>
     </form>
+    <div>
+        <h3>Debug Information:</h3>
+        <p>Student ID: {{ student.id }}</p>
+        <p>User ID: {{ student.user.id }}</p>
+        <p>User First Name: {{ student.user.first_name }}</p>
+        <p>User Last Name: {{ student.user.last_name }}</p>
+        <p>User Username: {{ student.user.username }}</p>
+    </div>
 {% endblock %}

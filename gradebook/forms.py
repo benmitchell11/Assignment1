@@ -16,18 +16,27 @@ class SemesterForm(forms.ModelForm):
 class ClassForm(forms.ModelForm):
     class Meta:
         model = Class
-        fields = ['number', 'semester', 'course', 'lecturer']
-
+        fields = ['name', 'number', 'semester', 'course']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['course'].queryset = Course.objects.all()
         self.fields['course'].label_from_instance = lambda obj: "%s (%s)" % (obj.name, obj.code)
-        self.fields['lecturer'].queryset = Lecturer.objects.all()
-        self.fields['lecturer'].label_from_instance = lambda obj: "%s %s" % (obj.user.first_name, obj.user.last_name)
         self.fields['semester'].queryset = Semester.objects.all()
-        self.fields['semester'].label_from_instance = lambda obj: "%s (%s)" % (obj.number, obj.year)
+        self.fields['semester'].label_from_instance = lambda obj: "%s (%s)" % (obj.semester, obj.year)
 
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        if commit:
+            instance.save()
+        return instance
+
+
+
+class AssignGradeForm(forms.ModelForm):
+    class Meta:
+        model = StudentEnrolment
+        fields = ['grade']
 
 
 class CourseForm(forms.ModelForm):
@@ -138,15 +147,26 @@ class LecturerForm(forms.ModelForm):
 class StudentEnrolmentForm(forms.ModelForm):
     class Meta:
         model = StudentEnrolment
-        fields = ['student', 'classID']
+        fields = ['student']
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['student'].widget.attrs['disabled'] = True
+        super(StudentEnrolmentForm, self).__init__(*args, **kwargs)
+        self.fields['student'].widget.attrs.update({'class': 'form-control'})
+        self.fields['student'].label_from_instance = lambda obj: f"{obj.user.first_name} {obj.user.last_name}"
 
-    def save(self, commit=True):
-        instance = super().save(commit=False)
-        instance.enrol_time = timezone.now()
-        if commit:
-            instance.save()
-        return instance
+
+
+
+class LecturerAssignmentForm(forms.ModelForm):
+    class Meta:
+        model = Class
+        fields = ['lecturer']
+
+    def __init__(self, *args, **kwargs):
+        course_id = kwargs.pop('course_id', None)
+        super().__init__(*args, **kwargs)
+        if course_id:
+            self.fields['lecturer'].queryset = Lecturer.objects.filter(course__id=course_id)
+        else:
+            self.fields['lecturer'].queryset = Lecturer.objects.all()
+        self.fields['lecturer'].label_from_instance = lambda obj: f"{obj.user.first_name} {obj.user.last_name}"

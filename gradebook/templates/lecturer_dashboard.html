@@ -1,0 +1,8 @@
+{% block content %}
+    <h1>Lecturer Dashboard</h1>
+    <h2>Welcome {{ request.user.first_name }} {{ request.user.last_name }}</h2>
+    <div>
+        <a href="{% url 'assigned_classes' lecturer.id %}">View Classes</a> <br>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+{% endblock %}
