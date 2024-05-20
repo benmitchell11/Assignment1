@@ -31,9 +31,9 @@
                         <td>{{ enrolment.student.user.first_name }}</td>
                         <td>{{ enrolment.student.user.last_name }}</td>
                         {% if request.user.is_authenticated and request.user.lecturer %}
-                            <td><a href={% url 'assign_grade' pk=enrolment.student.id %}>Assign Grade</a></td>
+                            <td><a href="{% url 'assign_grade' enrolment.student.id %}">Assign Grade</a></td>
                         {% endif %}
-                        <td><a href={% url 'student_detail' pk=enrolment.student.id %}>View Student</a></td>
+                        <td><a href={% url 'student_detail' enrolment.student.id %}>View Student</a></td>
                     </tr>
                 {% endfor %}
             </tbody>

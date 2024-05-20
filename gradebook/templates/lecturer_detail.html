@@ -42,7 +42,7 @@
         <button><a href="{% url 'admin_dashboard' %}">Back</a></button>
     {% endif %}
     {% if request.user.is_authenticated and request.user.lecturer %}
-        <button><a href="{% url 'admin_dashboard' %}">Back</a></button>
+        <button><a href="{% url 'lecturer_dashboard' %}">Back</a></button>
     {% endif %}
     {% if request.user.is_authenticated and request.user.student %}
         <button><a href="{% url 'student_dashboard' %}">Back</a></button>

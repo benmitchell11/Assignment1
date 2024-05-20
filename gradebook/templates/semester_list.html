@@ -13,6 +13,7 @@
                 <tr>
                     <td>Semester {{ semester.semester }}</td>
                     <td>{{ semester.year }}</td>
+                    <td><a href="{% url 'semester_detail' semester.id %}">View Semester</a></td>
                 </tr>
             {% endfor %}
         </tbody>

@@ -383,6 +383,9 @@ class AssignGradeView(LecturerRequiredMixin, UpdateView):
     form_class = AssignGradeForm
     template_name = 'assign_grade.html'
 
+    def get_object(self, queryset=None):
+        return get_object_or_404(StudentEnrolment, student_id=self.kwargs['pk'])
+
     def form_valid(self, form):
         form.instance.grade_time = timezone.now()
         self.object = form.save()
@@ -430,7 +433,7 @@ def read_excel(request):
             )
 
         print('Students created successfully')
-        return render(request, 'upload_students.html', {'msg': 'Students created successfully'})
+        return redirect('student_list')
     else:
         return render(request, 'upload_students.html', {'msg': ''})
 
